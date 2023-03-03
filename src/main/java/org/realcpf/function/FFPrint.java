@@ -2,25 +2,23 @@ package org.realcpf.function;
 
 import org.realcpf.line.LineEntry;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.List;
 
 public class FFPrint implements FF{
 
-  private final String partScript;
-  public FFPrint(String partScript){
-    this.partScript = partScript;
-  }
-
   @Override
-  public Object eval(LineEntry lineEntry) {
-    String[] params = getParams(this.partScript);
-    String line = Arrays.stream(params).map(String::trim).map(e->{
-      if (is$Ele(e)) return lineEntry.getAt(e);
-      else return e;
-    }).collect(Collectors.joining(" "));
-    System.out.println(line);
-    return "done";
+  public Object eval(LineEntry lineEntry, List<String> theParam) {
+    StringBuffer stringBuffer = new StringBuffer();
+    theParam.forEach(e->{
+      String[] strings = e.split(",");
+      for (String s:strings) {
+        if (is$Ele(s)) stringBuffer.append(lineEntry.getAt(s));
+        else stringBuffer.append(s);
+        stringBuffer.append(" ");
+      }
+
+    });
+    return stringBuffer.toString();
   }
 
 }

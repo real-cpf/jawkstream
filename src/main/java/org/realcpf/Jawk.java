@@ -1,10 +1,14 @@
 package org.realcpf;
 
-import org.realcpf.process.SingleProcess;
+import org.realcpf.process.ExprProcess;
 
 public class Jawk {
   public static void main(String[] args) {
-    SingleProcess process = new SingleProcess(",","{print $1,$2}");
-    process.doWith("./src/main/resources/test-file.csv");
+    String path = "./src/main/resources/test-file.csv";
+
+    ExprProcess exprProcess = new ExprProcess(",","{if(($1==a)&&(2==2)) print($1,$2,$3)}");
+    exprProcess.doWith(path);
+
+
   }
 }
